@@ -125,7 +125,7 @@ lib.callback.register("dispatch_phone:server:addDispatch", function(source, data
 
   local dispatch = {
     priority = priority,
-    code = "Handydispatch",
+    code = "PHONE",
     title = LocaleFormat(L.dispatch_title, { dept = dept.label }),
     description = msg,
     location = {
@@ -143,56 +143,11 @@ lib.callback.register("dispatch_phone:server:addDispatch", function(source, data
     blip = blip
   }
 
-  local ok, dispatchId
+  local ok, dispatchId = pcall(function()
+    return exports["lb-tablet"]:AddDispatch(dispatch)
+  end)
 
-  if GetResourceState('lb-tablet') == 'started' then
-    ok, dispatchId = pcall(function()
-      return exports["lb-tablet"]:AddDispatch(dispatch)
-    end)
-
-    if not ok then
-      return { success = false, message = L.err_failed }
-    end
-
-  elseif GetResourceState('kartik-mdt') == 'started' then
-    -- Priorität → Blip Farbe
-    local blipColor
-    if priority == "high"   then blipColor = 1  -- Rot
-    elseif priority == "medium" then blipColor = 5 -- Gelb
-    else                        blipColor = 2  -- Blau (low)
-    end
-
-    local coords = location.coords or {}
-
-    ok = pcall(function()
-      TriggerEvent('kartik-mdt:server:sendDispatchNotification', {
-        title       = LocaleFormat(L.dispatch_title, { dept = dept.label }),
-        code        = "Handydispatch",
-        description = ('%s | %s | %s'):format(dept.label, senderName, msg),
-        location    = location.label or (L.location_unknown or "Unbekannt"),
-        x           = tonumber(coords.x) or 0.0,
-        y           = tonumber(coords.y) or 0.0,
-        z           = tonumber(coords.z) or 0.0,
-        sound       = "dispatch",
-        type        = "Alert",
-        blip = {
-          radius  = 0.0,
-          sprite  = 431,
-          color   = blipColor,
-          scale   = 1.2,
-          length  = math.max(1, math.floor(Config.Dispatch.DurationSeconds / 60)),
-        },
-        jobs = { [dept.tabletJob] = true },
-      })
-    end)
-
-    if not ok then
-      return { success = false, message = L.err_failed }
-    end
-
-    dispatchId = nil -- kartik-mdt gibt keine ID zurück
-
-  else
+  if not ok then
     return { success = false, message = L.err_failed }
   end
 

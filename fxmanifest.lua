@@ -4,7 +4,7 @@ lua54 'yes'
 
 author 'Hitachi'
 description '17mov Phone Dispatch App -> lb-tablet AddDispatch'
-version '1.0.0'
+version '1.1.0'
 
 shared_scripts {
   '@ox_lib/init.lua',
@@ -20,9 +20,10 @@ server_scripts {
   'server/main.lua',
 }
 
+-- Dev: ui_page 'http://localhost:1717'
 ui_page 'web/build/index.html'
 
 files {
   'web/build/index.html',
-  'web/build/**/*'
+  'web/build/**/*',
 }

@@ -7,7 +7,7 @@ Config.App = {
   Name = "dispatch_phone",
   Label = "Dispatch",
 
-
+  -- optional: lege web/public/dispatch.png an -> nach build: web/build/dispatch.png
   Icon = "web/build/icon.svg",
 
   IconBackground = { angle = 45, colors = { "#0ea5e9", "#22c55e" } },
