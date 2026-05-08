@@ -1,21 +1,58 @@
-17mov_dispatch_phone
+# hitachi_dispatchapp
 
-17mov_dispatch_phone is a modern dispatch app for the 17mov Phone UI. It allows players to send reports directly to dispatch through their in-game phone.
+A modern dispatch app for **17mov_Phone**, allowing players to send reports directly to dispatch through their in-game phone.
 
-The system is fully compatible with lb-tablet and can also be integrated with MDT systems such as Kartik’s.
+Fully compatible with **kartik-mdt**.
 
-Features:
+---
 
-Integration into 17mov Phone UI
-Create dispatch calls directly in-game
-Support for multiple departments (e.g. SASP, SAMS)
-Priority system (low, medium, high)
-Automatic location transmission (street name & coordinates)
-Option to send reports anonymously
-Clean handoff to lb-tablet / MDT systems
-Extendable through server-side logic
+## ✨ Features
 
-The server-side dispatch logic can be modified to use systems other than lb-tablet, but this should only be done if you know what you’re doing.
+- Integration into 17mov Phone UI
+- Create dispatch calls directly in-game
+- Support for multiple departments
+- Priority system (low, medium, high)
+- Automatic location transmission (street name & coordinates)
+- Option to send reports anonymously
+- Per-department cooldown system
+- Fully configurable departments with MDT category mapping
 
-Original author:
-https://github.com/DerHobbs?tab=repositories
+---
+
+## 🔧 Dependencies
+
+- [17mov_Phone](https://17movement.net/products/17mov_phone)
+- [ox_lib](https://github.com/overextended/ox_lib)
+- [kartik-mdt](https://kartikscripts.store/)
+
+---
+
+## ⚙️ Configuration
+
+Departments are configured in `configs/config.lua`:
+
+```lua
+Config.Departments = {
+    sasp = { label = "SASP", job = "sasp", mdtCategory = "police" },
+    bcso = { label = "BCSO", job = "bcso", mdtCategory = "police" },
+    sams = { label = "SAMS", job = "ambulance", mdtCategory = "ems" },
+}
+```
+
+- `job` – the in-game job name
+- `mdtCategory` – the kartik-mdt job category (from `Config.Jobs` in kartik-mdt)
+
+---
+
+## 🛠️ Tech Stack
+
+The UI has been fully rewritten from **React + Redux** to **Svelte 5** with Vite.
+
+**Bundle size:** ~20kb instead of ~60kb
+
+---
+
+## 📜 Credits
+
+- Original author:  
+  https://github.com/DerHobbs?tab=repositories

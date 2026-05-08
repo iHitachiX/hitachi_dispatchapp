@@ -20,7 +20,6 @@ server_scripts {
   'server/main.lua',
 }
 
--- Dev: ui_page 'http://localhost:1717'
 ui_page 'web/build/index.html'
 
 files {

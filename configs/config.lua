@@ -34,10 +34,9 @@ Config.Dispatch = {
 Config.Dispatch.CooldownSeconds = 180 -- 3 Minuten
 
 Config.Departments = {
-  { id = "sasp",    label = "SASP",     tabletJob = "sasp" },
-  -- { id = "sheriff", label = "SHERIFFS", tabletJob = "police" },
-  { id = "sams",     label = "SAMS",      tabletJob = "sams" },
-  --{ id = "acls",    label = "ACLS",     tabletJob = "ambulance" },
+    sasp = { label = "SASP", job = "sasp", mdtCategory = "police" },
+    bcso = { label = "BCSO", job = "bcso", mdtCategory = "police" },
+    sams = { label = "SAMS", job = "ambulance", mdtCategory = "ems" },
 }
 
 _G.Config = Config
